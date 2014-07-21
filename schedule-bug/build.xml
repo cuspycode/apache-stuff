@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='utf-8'?>
+
+<project name="cruncher" default="war">
+
+  <property environment="env"/>
+
+  <path id="classpath">
+    <pathelement path="/opt/tomee/lib/javaee-api-6.0-6-tomcat.jar"/>
+  </path>
+
+  <target name="war" depends="clean,compile">
+    <property name="target" value="build/schedule-bug"/>
+    <copy todir="${target}/WEB-INF/classes">
+      <fileset dir="build/classes" />
+    </copy>
+    <war destfile="build/schedule-bug.war"
+	 basedir="${target}"
+	 webxml="web.xml" />
+  </target>
+
+  <target name="clean">
+    <delete file="schedule-bug.war"/>
+    <delete dir="build"/>
+  </target>
+
+  <target name="compile">
+    <mkdir dir="build/classes"/>
+    <javac srcdir="src"
+	   debug="yes"
+	   debuglevel="lines,source,vars"
+	   destdir="build/classes">
+      <classpath refid="classpath"/>
+    </javac>
+  </target>
+</project>
